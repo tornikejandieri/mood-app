@@ -2,22 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import WelcomeMessage from './components/WelcomeMessage';
 import EmojiMoods from './components/EmojiMoods';
+import HomeScreen from './screens/HomeScreen';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1}}>
       <StatusBar style="auto" />
-      <WelcomeMessage />
-      <EmojiMoods />
+      <HomeScreen />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+

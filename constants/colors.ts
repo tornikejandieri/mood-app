@@ -1,3 +1,3 @@
 export const colors = {
-  cyan: '#42eff5'
+  cyan: '#7af1f5'
 }
