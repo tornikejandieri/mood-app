@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native'
-import React, { useRef } from 'react'
-import { colors } from '../constants/colors'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 import AnimatedButton from './AnimatedButton'
 import { moodList } from '../constants/data'
 
