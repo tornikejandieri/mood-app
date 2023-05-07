@@ -5,7 +5,7 @@ const WelcomeMessage = () => {
   return (
     <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '10%'}}>
       <Text style={{fontSize: 26, fontWeight: 'bold'}}>Welcome Back 💜</Text>
-      <Text style={{fontSize: 16, marginTop: 10}}>What's your mood today?</Text>
+      <Text style={{fontSize: 18, marginTop: 10}}>How are you feeling today?</Text>
     </View>
   )
 }
