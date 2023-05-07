@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Animated, Text, StyleSheet, Image  } from 'react-native'
-import { emoji } from '../constants/data';
-import { useIsFocused } from '@react-navigation/native'
+import React, { useEffect, useRef, useState } from "react"
+import { View, Animated, Text, StyleSheet, Image } from "react-native"
+import { emoji } from "../constants/data"
+import { useIsFocused } from "@react-navigation/native"
 
 const getRandomEmojis = () => {
   const randomIndices: any = []
@@ -11,9 +11,8 @@ const getRandomEmojis = () => {
       randomIndices.push(randomIndex)
     }
   }
-  return randomIndices.map((index: string | number) => emoji[index as any] )
+  return randomIndices.map((index: string | number) => emoji[index as any])
 }
-
 
 const LoadingScreen = (props: { navigation: any }) => {
   const opacityValue = useRef(new Animated.Value(0)).current
@@ -21,38 +20,30 @@ const LoadingScreen = (props: { navigation: any }) => {
   const bgOpacityValue = useRef(new Animated.Value(0)).current
   const [emojis, setEmojis] = useState(getRandomEmojis())
 
-  setTimeout(() => props.navigation.navigate('HomeScreen'), 5000)
+  setTimeout(() => props.navigation.navigate("HomeScreen"), 5000)
 
   const isFocused = useIsFocused()
 
-  const renderRef = useRef(0)
-
-  renderRef.current++
-  console.log('component rendered ', renderRef.current, ' times')
-
-
   useEffect(() => {
-    let interval: string | number | NodeJS.Timeout | undefined;
-    if(isFocused){
+    let interval: string | number | NodeJS.Timeout | undefined
+    if (isFocused) {
       interval = setInterval(() => setEmojis(getRandomEmojis()), 500)
     }
-    
 
     return () => clearInterval(interval)
   }, [isFocused])
-
 
   useEffect(() => {
     Animated.sequence([
       Animated.timing(bgOpacityValue, {
         toValue: 1,
         duration: 1000,
-        useNativeDriver: true
+        useNativeDriver: true,
       }),
       Animated.timing(opacityValue, {
         toValue: 1,
         duration: 1500,
-        useNativeDriver: true
+        useNativeDriver: true,
       }),
       Animated.timing(scaleValue, {
         toValue: 1,
@@ -60,22 +51,38 @@ const LoadingScreen = (props: { navigation: any }) => {
         useNativeDriver: true,
       }),
       Animated.spring(scaleValue, {
-        toValue: .3,
+        toValue: 0.3,
         friction: 2,
-        useNativeDriver: true
+        useNativeDriver: true,
       }),
     ]).start()
   }, [])
 
   return (
     <View style={styles.container}>
-      <Animated.Image source={require('../assets/khasiati-app-logo.png')} style={[styles.logoContainer, { opacity: opacityValue, transform: [{ scale: scaleValue }] }]} />
-      <Animated.Image source={require('../assets/rainbow.png')} style={[styles.backgroundImage, { opacity: bgOpacityValue }]} />
-      <View style={{display: 'flex', flexDirection: 'row', position: 'absolute', bottom: '20%'}}>
-        <Text style={{fontSize: 50}}>{emojis}</Text>
+      <Animated.Image
+        source={require("../assets/khasiati-app-logo.png")}
+        style={[
+          styles.logoContainer,
+          { opacity: opacityValue, transform: [{ scale: scaleValue }] },
+        ]}
+      />
+      <Animated.Image
+        source={require("../assets/rainbow.png")}
+        style={[styles.backgroundImage, { opacity: bgOpacityValue }]}
+      />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          position: "absolute",
+          bottom: "20%",
+        }}
+      >
+        <Text style={{ fontSize: 50 }}>{emojis}</Text>
       </View>
     </View>
-  );
+  )
 }
 
 export default LoadingScreen
@@ -83,22 +90,22 @@ export default LoadingScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   logoContainer: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   logoText: {
     fontSize: 60,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   backgroundImage: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
-});
+})
