@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Animated, Text, StyleSheet, Image  } from 'react-native'
 import { emoji } from '../constants/data';
+import { useIsFocused } from '@react-navigation/native'
 
 const getRandomEmojis = () => {
   const randomIndices: any = []
@@ -14,17 +15,31 @@ const getRandomEmojis = () => {
 }
 
 
-const LoadingScreen = () => {
+const LoadingScreen = (props: { navigation: any }) => {
   const opacityValue = useRef(new Animated.Value(0)).current
   const scaleValue = useRef(new Animated.Value(0)).current
   const bgOpacityValue = useRef(new Animated.Value(0)).current
   const [emojis, setEmojis] = useState(getRandomEmojis())
 
+  setTimeout(() => props.navigation.navigate('HomeScreen'), 5000)
+
+  const isFocused = useIsFocused()
+
+  const renderRef = useRef(0)
+
+  renderRef.current++
+  console.log('component rendered ', renderRef.current, ' times')
+
+
   useEffect(() => {
-   const interval = setInterval(() => setEmojis(getRandomEmojis()), 500)
+    let interval: string | number | NodeJS.Timeout | undefined;
+    if(isFocused){
+      interval = setInterval(() => setEmojis(getRandomEmojis()), 500)
+    }
+    
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isFocused])
 
 
   useEffect(() => {
