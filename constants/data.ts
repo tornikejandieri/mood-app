@@ -9,3 +9,6 @@ export const moodList = [
   { id: 8, mood: 'Neutral', emoji: '😐' },
   { id: 9, mood: 'Bored', emoji: '😑' },
 ]
+
+export const emoji = ['😊', '😢', '🤬', '😨', '🤩', '😌', '😖', '😐', '😑']
+

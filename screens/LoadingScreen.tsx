@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Animated, Text, StyleSheet, Image  } from 'react-native'
-
-const emoji = ['😊', '😢', '🤬', '😨', '🤩', '😌', '😖', '😐', '😑']
-
+import { emoji } from '../constants/data';
 
 const getRandomEmojis = () => {
   const randomIndices: any = []
