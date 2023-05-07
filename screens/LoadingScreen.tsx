@@ -20,7 +20,7 @@ const LoadingScreen = (props: { navigation: any }) => {
   const bgOpacityValue = useRef(new Animated.Value(0)).current
   const [emojis, setEmojis] = useState(getRandomEmojis())
 
-  setTimeout(() => props.navigation.navigate("HomeScreen"), 5000)
+  setTimeout(() => props.navigation.navigate("Drawer"), 5000)
 
   const isFocused = useIsFocused()
 

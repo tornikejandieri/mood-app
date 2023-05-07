@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
-const HomeScreen = () => {
+const HomeScreen = (props: any) => {
   const [lastEntryDate, setLastEntryDate] = useState<any>(null)
 
   useEffect(() => {

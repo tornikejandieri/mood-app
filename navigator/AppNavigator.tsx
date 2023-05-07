@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import HomeScreen from "../screens/HomeScreen"
 import LoadingScreen from "../screens/LoadingScreen"
 import { colors } from "../constants/colors"
+import DrawerNavigator from "./Drawer"
 
 const Stack = createNativeStackNavigator()
 
@@ -16,12 +17,10 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
+          name="Drawer"
+          component={DrawerNavigator}
           options={{
-            headerTitle: "Home",
-            headerStyle: { backgroundColor: colors.purple },
-            headerBackVisible: false,
+            headerShown: false,
             gestureEnabled: false,
           }}
         />
