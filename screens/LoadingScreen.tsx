@@ -19,12 +19,12 @@ const LoadingScreen = () => {
         useNativeDriver: true
       }),
       Animated.timing(scaleValue, {
-        toValue: 1.2,
+        toValue: 1,
         duration: 300,
         useNativeDriver: true,
       }),
       Animated.spring(scaleValue, {
-        toValue: 1,
+        toValue: .3,
         friction: 2,
         useNativeDriver: true
       }),
@@ -33,9 +33,7 @@ const LoadingScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.logoContainer, { opacity: opacityValue, transform: [{ scale: scaleValue }] }]}>
-        <Text style={styles.logoText}>🤘😎</Text>
-      </Animated.View>
+      <Animated.Image source={require('../assets/khasiati-app-logo.png')} style={[styles.logoContainer, { opacity: opacityValue, transform: [{ scale: scaleValue }] }]} />
       <Animated.Image source={require('../assets/rainbow.png')} style={[styles.backgroundImage, { opacity: bgOpacityValue }]} />
     </View>
   );
