@@ -1,5 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
-import React from "react"
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+} from "react-native"
+import React, { useEffect, useRef, useState } from "react"
 import { colors } from "../constants/colors"
 
 interface Props {
@@ -8,20 +14,49 @@ interface Props {
 }
 
 const SlideButton: React.FC<Props> = ({ theme, onPress }) => {
+  const [isEnabled, setIsEnabled] = useState(false)
+  const translateValue = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    if (theme === "dark") {
+      translateValue.setValue(1)
+    }
+  }, [theme])
+
+  const handlePress = () => {
+    setIsEnabled((prev) => !prev)
+
+    Animated.timing(translateValue, {
+      toValue: theme === "dark" ? 0 : 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const switchButtonStyle = {
+    transform: [
+      {
+        translateX: translateValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 30],
+        }),
+      },
+    ],
+  }
+
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity
+      onPress={onPress}
+      onPressIn={handlePress}
+      activeOpacity={0.8}
+    >
       <View
         style={[
           styles.switchContainer,
           theme === "dark" && styles.switchContainerEnabled,
         ]}
       >
-        <View
-          style={[
-            styles.switchButton,
-            theme === "dark" && styles.switchButtonEnabled,
-          ]}
-        />
+        <Animated.View style={[styles.switchButton, switchButtonStyle]} />
       </View>
     </TouchableOpacity>
   )
@@ -45,8 +80,5 @@ const styles = StyleSheet.create({
     height: 30,
     position: "absolute",
     width: 30,
-  },
-  switchButtonEnabled: {
-    left: 30,
   },
 })

@@ -17,12 +17,11 @@ const SettingsScreen = () => {
 
   return (
     <View style={[styles.container]}>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", gap: 20 }}>
         <Entypo name="light-up" color="gray" size={30} />
+        <SlideButton theme={theme} onPress={() => dispatch(toggleTheme())} />
         <Entypo name="moon" color="gray" size={30} />
       </View>
-
-      <SlideButton theme={theme} onPress={() => dispatch(toggleTheme())} />
     </View>
   )
 }
