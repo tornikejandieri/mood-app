@@ -18,9 +18,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
       screenOptions={{
         drawerActiveBackgroundColor:
-          theme === "dark"
-            ? colors.darkPurpleHighLight
-            : colors.sidebarHighLight,
+          theme === "dark" ? colors.gray : colors.sidebarHighLight,
         drawerActiveTintColor: theme === "dark" ? colors.cyan : colors.black,
         drawerItemStyle: styles.drawerItem,
         drawerStyle:
