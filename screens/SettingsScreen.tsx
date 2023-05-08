@@ -1,14 +1,41 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, TouchableOpacity, Switch } from "react-native"
 import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../redux/store"
+import { toggleTheme } from "../models/themereducer/themeReducer"
+import { getThemeStyles } from "../utilities"
+import { Entypo } from "@expo/vector-icons"
+import SlideButton from "../components/SlideButton"
 
 const SettingsScreen = () => {
+  const dispatch = useDispatch()
+
+  const theme = useSelector((state: RootState) => state.theme.value)
+  const styles = getThemeStyles(theme)
+
+  const slash = "/"
+
   return (
-    <View>
-      <Text>SettingsScreen</Text>
+    <View style={[styles.container]}>
+      <View style={{ flexDirection: "row" }}>
+        <Entypo name="light-up" color="gray" size={30} />
+        <Entypo name="moon" color="gray" size={30} />
+      </View>
+
+      <SlideButton theme={theme} onPress={() => dispatch(toggleTheme())} />
     </View>
   )
 }
 
 export default SettingsScreen
 
-const styles = StyleSheet.create({})
+const style = StyleSheet.create({
+  button: {
+    flexDirection: "row",
+    gap: 10,
+    backgroundColor: "lightgray",
+    paddingHorizontal: 20,
+    paddingVertical: 7,
+    borderRadius: 10,
+  },
+})

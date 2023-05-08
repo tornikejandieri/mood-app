@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from "react"
 import { View, Animated, Text, StyleSheet, Image } from "react-native"
 import { emoji } from "../constants/data"
 import { useIsFocused } from "@react-navigation/native"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../redux/store"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { setThemeByValue } from "../models/themereducer/themeReducer"
 
 const getRandomEmojis = () => {
   const randomIndices: any = []
@@ -20,9 +24,23 @@ const LoadingScreen = (props: { navigation: any }) => {
   const bgOpacityValue = useRef(new Animated.Value(0)).current
   const [emojis, setEmojis] = useState(getRandomEmojis())
 
+  const theme = useSelector((state: RootState) => state.theme.value)
+  const dispatch = useDispatch()
+
   setTimeout(() => props.navigation.navigate("Drawer"), 5000)
 
   const isFocused = useIsFocused()
+
+  useEffect(() => {
+    const getData = async () => {
+      const value = await AsyncStorage.getItem("theme")
+      if (value !== null) {
+        const parsedValue = JSON.parse(value)
+        dispatch(setThemeByValue(parsedValue))
+      }
+    }
+    getData()
+  }, [])
 
   useEffect(() => {
     let interval: string | number | NodeJS.Timeout | undefined

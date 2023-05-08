@@ -3,13 +3,27 @@ import React, { useState, useEffect } from "react"
 import WelcomeMessage from "../components/WelcomeMessage"
 import EmojiMoods from "../components/EmojiMoods"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useSelector } from "react-redux"
+import { RootState } from "../redux/store"
+import { useIsFocused } from "@react-navigation/native"
+import { getThemeStyles } from "../utilities"
+import { colors } from "../constants/colors"
+import Tomorrow from "../components/Tomorrow"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
-const HomeScreen = (props: any) => {
+const HomeScreen = () => {
   const [lastEntryDate, setLastEntryDate] = useState<any>(null)
 
+  const theme = useSelector((state: RootState) => state.theme.value)
+  const styles = getThemeStyles(theme)
+
+  const isFocused = useIsFocused()
+
   useEffect(() => {
+    if (!isFocused) {
+      return
+    }
     const loadLastEntryDate = async () => {
       const date = await AsyncStorage.getItem("lastEntryDate")
       if (date) {
@@ -17,7 +31,7 @@ const HomeScreen = (props: any) => {
       }
     }
     loadLastEntryDate()
-  }, [lastEntryDate])
+  }, [isFocused])
 
   const isEntryAllowed = () => {
     if (!lastEntryDate) {
@@ -36,35 +50,22 @@ const HomeScreen = (props: any) => {
     console.log(`You selected ${mood}.`)
   }
 
+  useEffect(() => {
+    isEntryAllowed()
+  }, [onMoodPress])
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       {isEntryAllowed() ? (
         <>
-          <WelcomeMessage />
+          <WelcomeMessage theme={theme} styles={styles} />
           <EmojiMoods onMoodPress={onMoodPress} />
         </>
       ) : (
-        <>
-          <Text style={{ fontSize: 16 }}>
-            Come back tomorrow to enter your mood again
-          </Text>
-          <Image
-            style={{ position: "absolute", bottom: "0%" }}
-            source={require("../assets/megumin.gif")}
-          />
-        </>
+        <Tomorrow theme={theme} styles={styles} />
       )}
     </View>
   )
 }
 
 export default HomeScreen
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-})

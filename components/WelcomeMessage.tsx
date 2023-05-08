@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native"
 import React from "react"
 
-const WelcomeMessage = () => {
+const WelcomeMessage = ({ styles }: any) => {
   return (
     <View
       style={{
@@ -12,8 +12,10 @@ const WelcomeMessage = () => {
         top: "10%",
       }}
     >
-      <Text style={{ fontSize: 26, fontWeight: "bold" }}>Welcome Back 💜</Text>
-      <Text style={{ fontSize: 18, marginTop: 10 }}>
+      <Text style={[styles.text, { fontSize: 26, fontWeight: "bold" }]}>
+        Welcome Back 💜
+      </Text>
+      <Text style={[styles.text, { fontSize: 18, marginTop: 10 }]}>
         How are you feeling today?
       </Text>
     </View>

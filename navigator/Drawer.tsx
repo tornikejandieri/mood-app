@@ -6,17 +6,25 @@ import { colors } from "../constants/colors"
 import { StyleSheet } from "react-native"
 import { Entypo } from "@expo/vector-icons"
 import Header from "../components/Header"
+import { useSelector } from "react-redux"
+import { RootState } from "../redux/store"
 
 const Drawer = createDrawerNavigator()
 
 const DrawerNavigator = () => {
+  const theme = useSelector((state: RootState) => state.theme.value)
+
   return (
     <Drawer.Navigator
       screenOptions={{
-        drawerActiveBackgroundColor: colors.cyan,
-        drawerActiveTintColor: colors.black,
+        drawerActiveBackgroundColor:
+          theme === "dark" ? colors.darkPurpleHighLight : colors.cyan,
+        drawerActiveTintColor: theme === "dark" ? colors.cyan : colors.black,
         drawerItemStyle: styles.drawerItem,
-        drawerStyle: styles.drawerContainer,
+        drawerStyle:
+          theme === "dark"
+            ? styles.drawerContainerDark
+            : styles.drawerContainer,
         drawerInactiveTintColor: colors.white,
         drawerType: "front",
         drawerPosition: "right",
@@ -26,18 +34,40 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
-        options={{ drawerIcon: () => <Entypo name="home" size={17} /> }}
+        options={{
+          drawerIcon: () => (
+            <Entypo
+              name="home"
+              size={17}
+              color={theme === "dark" ? colors.cyan : colors.black}
+            />
+          ),
+        }}
       />
       <Drawer.Screen
-        name="Previous Moods"
+        name="Mood History"
         component={StatisticsScreen}
-        options={{ drawerIcon: () => <Entypo name="emoji-happy" size={17} /> }}
+        options={{
+          drawerIcon: () => (
+            <Entypo
+              name="emoji-happy"
+              size={17}
+              color={theme === "dark" ? colors.cyan : colors.black}
+            />
+          ),
+        }}
       />
       <Drawer.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          drawerIcon: () => <Entypo name="cog" size={17} />,
+          drawerIcon: () => (
+            <Entypo
+              name="cog"
+              size={17}
+              color={theme === "dark" ? colors.cyan : colors.black}
+            />
+          ),
         }}
       />
     </Drawer.Navigator>
@@ -57,5 +87,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 20,
     backgroundColor: colors.purple,
+  },
+  drawerContainerDark: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingBottom: 20,
+    backgroundColor: colors.darkPurple,
   },
 })
