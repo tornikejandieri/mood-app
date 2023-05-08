@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Animated,
-} from "react-native"
-import React, { useEffect, useRef, useState } from "react"
+import { StyleSheet, View, TouchableOpacity, Animated } from "react-native"
+import React, { useEffect, useRef } from "react"
 import { colors } from "../constants/colors"
 
 interface Props {
@@ -14,7 +8,6 @@ interface Props {
 }
 
 const SlideButton: React.FC<Props> = ({ theme, onPress }) => {
-  const [isEnabled, setIsEnabled] = useState(false)
   const translateValue = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
@@ -24,8 +17,6 @@ const SlideButton: React.FC<Props> = ({ theme, onPress }) => {
   }, [theme])
 
   const handlePress = () => {
-    setIsEnabled((prev) => !prev)
-
     Animated.timing(translateValue, {
       toValue: theme === "dark" ? 0 : 1,
       duration: 300,
