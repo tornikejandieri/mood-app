@@ -18,14 +18,17 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
       screenOptions={{
         drawerActiveBackgroundColor:
-          theme === "dark" ? colors.darkPurpleHighLight : colors.cyan,
+          theme === "dark"
+            ? colors.darkPurpleHighLight
+            : colors.sidebarHighLight,
         drawerActiveTintColor: theme === "dark" ? colors.cyan : colors.black,
         drawerItemStyle: styles.drawerItem,
         drawerStyle:
           theme === "dark"
             ? styles.drawerContainerDark
             : styles.drawerContainer,
-        drawerInactiveTintColor: colors.white,
+        drawerInactiveTintColor:
+          theme === "dark" ? colors.disabled : colors.white,
         drawerType: "front",
         drawerPosition: "right",
         header: () => <Header />,
@@ -86,12 +89,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     paddingBottom: 20,
-    backgroundColor: colors.purple,
+    backgroundColor: colors.sidebar,
   },
   drawerContainerDark: {
     flex: 1,
     justifyContent: "space-between",
     paddingBottom: 20,
-    backgroundColor: colors.darkPurple,
+    backgroundColor: colors.darkGray,
   },
 })

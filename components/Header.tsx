@@ -15,7 +15,7 @@ const Header = () => {
     <View
       style={{
         height: 55,
-        backgroundColor: theme === "dark" ? colors.darkGray : colors.purple,
+        backgroundColor: theme === "dark" ? colors.darkGray : colors.sidebar,
         justifyContent: "flex-end",
         flexDirection: "row",
       }}

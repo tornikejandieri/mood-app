@@ -8,5 +8,7 @@ export const colors = {
   darkPurple: '#41264a',
   darkPurpleHighLight: '#6e4e85',
   green: "#5cb85c",
-  disabled: "#ccc"
+  disabled: "#ccc",
+  sidebar: '#8F9AD9',
+  sidebarHighLight: '#DFE0F2'
 }
