@@ -6,6 +6,7 @@ import { toggleTheme } from "../models/themereducer/themeReducer"
 import { getThemeStyles } from "../utilities"
 import { Entypo } from "@expo/vector-icons"
 import SlideButton from "../components/SlideButton"
+import useRenderRef from "../custom hooks/useRenderRef"
 
 const SettingsScreen = () => {
   const dispatch = useDispatch()
@@ -14,6 +15,8 @@ const SettingsScreen = () => {
   const styles = getThemeStyles(theme)
 
   const slash = "/"
+
+  // useRenderRef()
 
   return (
     <View style={[styles.container]}>

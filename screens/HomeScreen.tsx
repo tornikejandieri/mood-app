@@ -9,6 +9,7 @@ import { useIsFocused } from "@react-navigation/native"
 import { getThemeStyles } from "../utilities"
 import { colors } from "../constants/colors"
 import Tomorrow from "../components/Tomorrow"
+import useRenderRef from "../custom hooks/useRenderRef"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
@@ -19,6 +20,8 @@ const HomeScreen = () => {
   const styles = getThemeStyles(theme)
 
   const isFocused = useIsFocused()
+
+  // useRenderRef()
 
   useEffect(() => {
     if (!isFocused) {
@@ -41,13 +44,26 @@ const HomeScreen = () => {
     return timeSinceLastEntry >= ONE_DAY_IN_MILLISECONDS
   }
 
-  const onMoodPress = (mood: string) => {
-    const currentDate = new Date()
-    AsyncStorage.setItem("lastEntryDate", currentDate.toISOString())
-    setLastEntryDate(currentDate)
-    const entry = { date: currentDate, mood: mood }
-    AsyncStorage.setItem("dailyData", JSON.stringify(entry))
-    console.log(`You selected ${mood}.`)
+  const onMoodPress = async (mood: string) => {
+    let moodArray = []
+    let dateArray = []
+    let currentDate = new Date()
+    try {
+      let storedMoods = await AsyncStorage.getItem("dailyData")
+      let storedDate = await AsyncStorage.getItem("lastEntryDate")
+      if (storedMoods !== null) {
+        moodArray = JSON.parse(storedMoods)
+      }
+      if (storedDate !== null) {
+        dateArray = JSON.parse(storedDate)
+      }
+      moodArray.push(mood)
+      dateArray.push(currentDate)
+      const entry = { date: dateArray, mood: moodArray }
+      await AsyncStorage.setItem("dailyData", JSON.stringify(entry))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {

@@ -12,7 +12,7 @@ const EmojiMoods: React.FC<Props> = ({ onMoodPress }) => {
     <View style={styles.container}>
       {moodList.map((i) => (
         <View key={i.id}>
-          <AnimatedButton onPress={() => onMoodPress(i.mood)}>
+          <AnimatedButton onPress={() => onMoodPress(`${i.mood + i.emoji}`)}>
             <Text style={{ fontSize: 40 }}>{i.emoji}</Text>
             <Text style={{ fontSize: 16 }}>{i.mood}</Text>
           </AnimatedButton>
