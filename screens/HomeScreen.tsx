@@ -8,6 +8,7 @@ import { RootState } from "../redux/store"
 import { useIsFocused } from "@react-navigation/native"
 import { getThemeStyles } from "../utilities"
 import Tomorrow from "../components/Tomorrow"
+import useRenderRef from "../custom hooks/useRenderRef"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
@@ -58,6 +59,7 @@ const HomeScreen = () => {
       data.mood.push(mood)
 
       await AsyncStorage.setItem("mData", JSON.stringify(data))
+      setLastEntryDate(new Date(data.date.at(-1)))
     } catch (error) {
       console.error(error)
     }
@@ -65,7 +67,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     isEntryAllowed()
-  }, [onMoodPress])
+  }, [onMoodPress, lastEntryDate])
 
   return (
     <View style={[styles.container]}>
