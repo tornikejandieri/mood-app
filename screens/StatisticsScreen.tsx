@@ -1,18 +1,15 @@
-import { FlatList, StyleSheet, Text, View } from "react-native"
+import { FlatList, Text, View } from "react-native"
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { colors } from "../constants/colors"
 import { dateFormatter } from "../helpers"
-import useRenderRef from "../custom hooks/useRenderRef"
 
 const StatisticsScreen = () => {
   const theme = useSelector((state: RootState) => state.theme.value)
 
   const [data, setData] = useState([])
-
-  // useRenderRef()
 
   useEffect(() => {
     const getData = async () => {
@@ -81,5 +78,3 @@ const StatisticsScreen = () => {
 }
 
 export default StatisticsScreen
-
-const styles = StyleSheet.create({})

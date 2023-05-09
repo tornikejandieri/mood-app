@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Switch } from "react-native"
+import { View } from "react-native"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
@@ -6,17 +6,12 @@ import { toggleTheme } from "../models/themereducer/themeReducer"
 import { getThemeStyles } from "../utilities"
 import { Entypo } from "@expo/vector-icons"
 import SlideButton from "../components/SlideButton"
-import useRenderRef from "../custom hooks/useRenderRef"
 
 const SettingsScreen = () => {
   const dispatch = useDispatch()
 
   const theme = useSelector((state: RootState) => state.theme.value)
   const styles = getThemeStyles(theme)
-
-  const slash = "/"
-
-  // useRenderRef()
 
   return (
     <View style={[styles.container]}>
@@ -30,14 +25,3 @@ const SettingsScreen = () => {
 }
 
 export default SettingsScreen
-
-const style = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    gap: 10,
-    backgroundColor: "lightgray",
-    paddingHorizontal: 20,
-    paddingVertical: 7,
-    borderRadius: 10,
-  },
-})

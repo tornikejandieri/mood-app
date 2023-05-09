@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
-import { View, Animated, Text, StyleSheet, Image } from "react-native"
+import React, { useEffect, useState } from "react"
+import { View, Text, StyleSheet } from "react-native"
 import { emoji } from "../constants/data"
 import { useIsFocused } from "@react-navigation/native"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+import { useDispatch } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { setThemeByValue } from "../models/themereducer/themeReducer"
-import useRenderRef from "../custom hooks/useRenderRef"
+import { colors } from "../constants/colors"
 
 const getRandomEmojis = () => {
   const randomIndices: any = []
@@ -22,7 +21,6 @@ const getRandomEmojis = () => {
 const LoadingScreen = (props: { navigation: any }) => {
   const [emojis, setEmojis] = useState(getRandomEmojis())
 
-  const theme = useSelector((state: RootState) => state.theme.value)
   const dispatch = useDispatch()
 
   setTimeout(() => props.navigation.navigate("Drawer"), 4000)
@@ -63,6 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: colors.cyan,
   },
   logoContainer: {
     position: "absolute",

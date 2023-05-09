@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import React from "react"
 
 const WelcomeMessage = ({ styles }: any) => {
@@ -23,5 +23,3 @@ const WelcomeMessage = ({ styles }: any) => {
 }
 
 export default WelcomeMessage
-
-const styles = StyleSheet.create({})

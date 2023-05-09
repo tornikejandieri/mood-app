@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image } from "react-native"
+import { View } from "react-native"
 import React, { useState, useEffect } from "react"
 import WelcomeMessage from "../components/WelcomeMessage"
 import EmojiMoods from "../components/EmojiMoods"
@@ -7,9 +7,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import { useIsFocused } from "@react-navigation/native"
 import { getThemeStyles } from "../utilities"
-import { colors } from "../constants/colors"
 import Tomorrow from "../components/Tomorrow"
-import useRenderRef from "../custom hooks/useRenderRef"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
@@ -20,8 +18,6 @@ const HomeScreen = () => {
   const styles = getThemeStyles(theme)
 
   const isFocused = useIsFocused()
-
-  // useRenderRef()
 
   useEffect(() => {
     if (!isFocused) {
