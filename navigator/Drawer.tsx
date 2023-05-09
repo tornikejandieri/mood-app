@@ -17,6 +17,8 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
+        drawerLabelStyle: styles.label,
+        drawerContentContainerStyle: styles.contentContainer,
         drawerActiveBackgroundColor:
           theme === "dark" ? colors.gray : colors.sidebarHighLight,
         drawerActiveTintColor: theme === "dark" ? colors.cyan : colors.black,
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   drawerItem: {
     padding: 10,
     fontWeight: "bold",
-    borderRadius: 50,
+    borderRadius: 10,
   },
   drawerContainer: {
     flex: 1,
@@ -94,5 +96,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 20,
     backgroundColor: colors.darkGray,
+  },
+  contentContainer: {
+    marginTop: 50,
+  },
+  label: {
+    fontSize: 20,
   },
 })
