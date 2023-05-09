@@ -3,21 +3,27 @@ import React, { useState, useEffect } from "react"
 import WelcomeMessage from "../components/WelcomeMessage"
 import EmojiMoods from "../components/EmojiMoods"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import { useIsFocused } from "@react-navigation/native"
 import { getThemeStyles } from "../utilities"
 import Tomorrow from "../components/Tomorrow"
 import useRenderRef from "../custom hooks/useRenderRef"
+import HalfScreenModal from "../components/HalfScreenModal"
+import SlideButton from "../components/SlideButton"
+import { toggleTheme } from "../models/themereducer/themeReducer"
+import { Entypo } from "@expo/vector-icons"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
 const HomeScreen = () => {
   const [lastEntryDate, setLastEntryDate] = useState<any>(null)
+  const modal = useSelector((state: RootState) => state.modal.value)
 
   const theme = useSelector((state: RootState) => state.theme.value)
   const styles = getThemeStyles(theme)
 
+  const dispatch = useDispatch()
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -78,6 +84,18 @@ const HomeScreen = () => {
         </>
       ) : (
         <Tomorrow theme={theme} styles={styles} />
+      )}
+      {modal && (
+        <HalfScreenModal>
+          <View style={{ flexDirection: "row", gap: 20 }}>
+            <Entypo name="light-up" color="gray" size={30} />
+            <SlideButton
+              theme={theme}
+              onPress={() => dispatch(toggleTheme())}
+            />
+            <Entypo name="moon" color="gray" size={30} />
+          </View>
+        </HalfScreenModal>
       )}
     </View>
   )

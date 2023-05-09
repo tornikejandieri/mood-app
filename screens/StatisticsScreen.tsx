@@ -1,15 +1,21 @@
 import { Alert, FlatList, Text, View } from "react-native"
 import React, { useCallback, useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { colors } from "../constants/colors"
 import { dateFormatter } from "../helpers"
 import { useFocusEffect, useIsFocused } from "@react-navigation/native"
 import useRenderRef from "../custom hooks/useRenderRef"
+import HalfScreenModal from "../components/HalfScreenModal"
+import SlideButton from "../components/SlideButton"
+import { toggleTheme } from "../models/themereducer/themeReducer"
+import { Entypo } from "@expo/vector-icons"
 
 const StatisticsScreen = () => {
   const theme = useSelector((state: RootState) => state.theme.value)
+  const modal = useSelector((state: RootState) => state.modal.value)
+  const dispatch = useDispatch()
 
   const [data, setData] = useState([])
 
@@ -83,6 +89,18 @@ const StatisticsScreen = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.date}
         />
+      )}
+      {modal && (
+        <HalfScreenModal>
+          <View style={{ flexDirection: "row", gap: 20 }}>
+            <Entypo name="light-up" color="gray" size={30} />
+            <SlideButton
+              theme={theme}
+              onPress={() => dispatch(toggleTheme())}
+            />
+            <Entypo name="moon" color="gray" size={30} />
+          </View>
+        </HalfScreenModal>
       )}
     </View>
   )

@@ -1,7 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import HomeScreen from "../screens/HomeScreen"
 import StatisticsScreen from "../screens/StatisticsScreen"
-import SettingsScreen from "../screens/SettingsScreen"
 import { colors } from "../constants/colors"
 import { StyleSheet } from "react-native"
 import { Entypo } from "@expo/vector-icons"
@@ -54,19 +53,6 @@ const DrawerNavigator = () => {
           drawerIcon: () => (
             <Entypo
               name="emoji-happy"
-              size={17}
-              color={theme === "dark" ? colors.cyan : colors.black}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          drawerIcon: () => (
-            <Entypo
-              name="cog"
               size={17}
               color={theme === "dark" ? colors.cyan : colors.black}
             />
