@@ -24,9 +24,10 @@ const HomeScreen = () => {
       return
     }
     const loadLastEntryDate = async () => {
-      const date = await AsyncStorage.getItem("lastEntryDate")
-      if (date) {
-        setLastEntryDate(new Date(date))
+      const item = await AsyncStorage.getItem("mData")
+      if (item !== null) {
+        const parsedItem = JSON.parse(item)
+        setLastEntryDate(new Date(parsedItem.date.at(-1)))
       }
     }
     loadLastEntryDate()
@@ -41,22 +42,22 @@ const HomeScreen = () => {
   }
 
   const onMoodPress = async (mood: string) => {
-    let moodArray = []
-    let dateArray = []
-    let currentDate = new Date()
     try {
-      let storedMoods = await AsyncStorage.getItem("dailyData")
-      let storedDate = await AsyncStorage.getItem("lastEntryDate")
-      if (storedMoods !== null) {
-        moodArray = JSON.parse(storedMoods)
+      const currentDate = new Date()
+      const storedData = await AsyncStorage.getItem("mData")
+      let data = {
+        date: [] as any,
+        mood: [] as any,
       }
-      if (storedDate !== null) {
-        dateArray = JSON.parse(storedDate)
+
+      if (storedData) {
+        data = JSON.parse(storedData)
       }
-      moodArray.push(mood)
-      dateArray.push(currentDate)
-      const entry = { date: dateArray, mood: moodArray }
-      await AsyncStorage.setItem("dailyData", JSON.stringify(entry))
+
+      data.date.push(currentDate)
+      data.mood.push(mood)
+
+      await AsyncStorage.setItem("mData", JSON.stringify(data))
     } catch (error) {
       console.error(error)
     }
