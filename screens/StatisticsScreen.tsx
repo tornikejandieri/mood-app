@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -18,7 +18,7 @@ import HalfScreenModal from "../components/HalfScreenModal"
 import SlideButton from "../components/SlideButton"
 import { toggleTheme } from "../models/themereducer/themeReducer"
 import { Entypo } from "@expo/vector-icons"
-import TimeModal from "../components/TimeModal"
+import Notification from "../components/Notification"
 
 const StatisticsScreen = () => {
   const [showTimeModal, setShowTimeModal] = useState(false)
@@ -31,7 +31,7 @@ const StatisticsScreen = () => {
 
   const isFocused = useIsFocused()
 
-  const animatedValue = new Animated.Value(0)
+  useRenderRef()
 
   useEffect(() => {
     const getData = async () => {
@@ -50,26 +50,6 @@ const StatisticsScreen = () => {
     }
     getData()
   }, [isFocused])
-
-  const handlePress = () => {
-    Animated.spring(animatedValue, {
-      toValue: 1,
-      friction: 9,
-      useNativeDriver: true,
-    }).start()
-  }
-
-  useEffect(() => {
-    handlePress()
-  }, [showTimeModal])
-
-  const handleClose = () => {
-    Animated.spring(animatedValue, {
-      toValue: 0,
-      friction: 9,
-      useNativeDriver: true,
-    }).start(() => setShowTimeModal(false))
-  }
 
   const renderItem = ({ item }: { item: { mood: string; date: string } }) => {
     return (
@@ -144,22 +124,10 @@ const StatisticsScreen = () => {
         </HalfScreenModal>
       )}
       {showTimeModal && (
-        <Animated.View
-          style={{
-            position: "absolute",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            alignSelf: "center",
-            flex: 1,
-            height: "100%",
-            width: "100%",
-            backgroundColor: "rgba(0,0,0, .5)",
-            transform: [{ scale: animatedValue }],
-          }}
-        >
-          <TimeModal date={selectedDate} handleClose={handleClose} />
-        </Animated.View>
+        <Notification
+          message={selectedDate}
+          setShowTimeModal={setShowTimeModal}
+        />
       )}
     </View>
   )
