@@ -17,14 +17,17 @@ export const minutesHoursAndDays = (i: string) => {
   const diffInMonths = Math.floor(diffInDays / 30)
 
   if (diffInMonths > 0) {
-    const remainingDays = diffInDays % 30;
+    const remainingDays = diffInDays % 30
     return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''}${remainingDays > 0 ? ` and ${remainingDays} day${remainingDays > 1 ? 's' : ''}` : ''}`
   } else if (diffInDays > 0) {
     return `${diffInDays} day${diffInDays > 1 ? 's' : ''}`
   } else if (diffInHours > 0) {
     return `${diffInHours} hr`
+  } else if (diffInMinutes < 1) {
+    return "just now"
   } else {
     return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''}`
   }
 }
+
 
