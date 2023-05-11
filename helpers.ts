@@ -1,8 +1,3 @@
-export const dateFormatter = (i: string) => {
-  const date = new Date(i)
-  const options = { day: 'numeric', month: 'short', year: 'numeric' }
-  return date.toLocaleDateString(undefined, options)  
-}
 
 
 
@@ -30,4 +25,38 @@ export const minutesHoursAndDays = (i: string) => {
   }
 }
 
+
+export const formatDate = (dateStr: string): string => {
+  const now = new Date()
+  let date = new Date(now)
+  if (dateStr.includes("day")) {
+    const daysAgo = parseInt(dateStr.split(" ")[0])
+    date.setDate(date.getDate() - daysAgo)
+  } else if (dateStr.includes("week")) {
+    const weeksAgo = parseInt(dateStr.split(" ")[0])
+    date.setDate(date.getDate() - weeksAgo * 7)
+  } else if (dateStr.includes("month")) {
+    const monthsAgo = parseInt(dateStr.split(" ")[0])
+    date.setMonth(date.getMonth() - monthsAgo)
+  }
+  const day = date.getDate().toString().padStart(2, "0")
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  const monthIndex = date.getMonth()
+  const monthName = monthNames[monthIndex]
+  const year = date.getFullYear().toString()
+  return `${day}/${monthName}/${year}`
+}
 

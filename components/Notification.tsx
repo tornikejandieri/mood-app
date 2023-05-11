@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { Animated, Text, View } from "react-native"
-import { dateFormatter } from "../helpers"
 import { colors } from "../constants/colors"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
@@ -62,7 +61,7 @@ const Notification = ({ message, duration = 3000, setShowTimeModal }) => {
             color: theme === "dark" ? colors.gray : colors.black,
           }}
         >
-          {dateFormatter(message)}
+          {message}
         </Text>
       </View>
     </Animated.View>

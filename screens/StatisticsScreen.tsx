@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { colors } from "../constants/colors"
-import { minutesHoursAndDays } from "../helpers"
+import { formatDate, minutesHoursAndDays } from "../helpers"
 import { useIsFocused } from "@react-navigation/native"
 import useRenderRef from "../custom hooks/useRenderRef"
 import HalfScreenModal from "../components/HalfScreenModal"
@@ -49,7 +49,7 @@ const StatisticsScreen = () => {
         for (let i = 0; i < parsedValue.mood.length; i++) {
           moodArray.push({
             mood: parsedValue.mood[i],
-            date: parsedValue.date[i],
+            date: minutesHoursAndDays(parsedValue.date[i]),
           })
         }
         setData(moodArray.reverse())
@@ -74,7 +74,7 @@ const StatisticsScreen = () => {
         <TouchableOpacity
           onPress={() => {
             setShowTimeModal(true)
-            setSelectedDate(item.date)
+            setSelectedDate(formatDate(item.date))
           }}
           style={{ flex: 1, paddingVertical: 10 }}
         >
@@ -86,7 +86,7 @@ const StatisticsScreen = () => {
               color: theme === "dark" ? colors.disabled : colors.black,
             }}
           >
-            {`${minutesHoursAndDays(item.date)} ago`}
+            {item.date}
           </Text>
         </TouchableOpacity>
 
@@ -127,7 +127,7 @@ const StatisticsScreen = () => {
         }}
         onPress={() => {
           setShowTimeModal(true)
-          setSelectedDate(item.date)
+          setSelectedDate(formatDate(item.date))
         }}
       >
         <Text
@@ -145,7 +145,7 @@ const StatisticsScreen = () => {
             color: theme === "dark" ? colors.disabled : colors.black,
           }}
         >
-          {`${minutesHoursAndDays(item.date)} ago`}
+          {item.date}
         </Text>
       </TouchableOpacity>
     )
@@ -158,7 +158,7 @@ const StatisticsScreen = () => {
           <FlatList
             data={data}
             renderItem={renderItem}
-            keyExtractor={(item) => item.date}
+            keyExtractor={(item, index) => item.date + index}
             showsVerticalScrollIndicator={false}
           />
         )
@@ -167,7 +167,7 @@ const StatisticsScreen = () => {
           <FlatList
             data={data}
             renderItem={renderGridItem}
-            keyExtractor={(item) => item.date}
+            keyExtractor={(item, index) => item.date + index}
             numColumns={2}
             showsVerticalScrollIndicator={false}
           />
@@ -177,7 +177,7 @@ const StatisticsScreen = () => {
           <FlatList
             data={data}
             renderItem={renderItem}
-            keyExtractor={(item) => item.date}
+            keyExtractor={(item, index) => item.date + index}
             showsVerticalScrollIndicator={false}
           />
         )
