@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { setThemeByValue } from "../models/themereducer/themeReducer"
 import { colors } from "../constants/colors"
+import { minutesHoursAndDays } from "../helpers"
+import { data } from "../models/historyReducer/historyReducer"
 
 const getRandomEmojis = () => {
   const randomIndices: any = []
@@ -23,19 +25,37 @@ const LoadingScreen = (props: { navigation: any }) => {
 
   const dispatch = useDispatch()
 
-  setTimeout(() => props.navigation.navigate("Drawer"), 4000)
+  setTimeout(() => props.navigation.navigate("Drawer"), 5000)
 
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    const getData = async () => {
+    const getHistoryData = async () => {
+      const moodData = await AsyncStorage.getItem("mData")
+      if (moodData) {
+        const parsedValue = JSON.parse(moodData)
+        const moodArray = []
+        for (let i = 0; i < parsedValue.mood.length; i++) {
+          moodArray.push({
+            mood: parsedValue.mood[i],
+            date: minutesHoursAndDays(parsedValue.date[i]),
+          })
+        }
+        dispatch(data(moodArray.reverse()))
+      }
+    }
+    getHistoryData()
+  }, [])
+
+  useEffect(() => {
+    const getThemeData = async () => {
       const value = await AsyncStorage.getItem("theme")
       if (value !== null) {
         const parsedValue = JSON.parse(value)
         dispatch(setThemeByValue(parsedValue))
       }
     }
-    getData()
+    getThemeData()
   }, [])
 
   useEffect(() => {

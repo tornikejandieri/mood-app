@@ -13,6 +13,8 @@ import HalfScreenModal from "../components/HalfScreenModal"
 import SlideButton from "../components/SlideButton"
 import { toggleTheme } from "../models/themereducer/themeReducer"
 import { Entypo } from "@expo/vector-icons"
+import { minutesHoursAndDays } from "../helpers"
+import { data } from "../models/historyReducer/historyReducer"
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 
@@ -25,6 +27,22 @@ const HomeScreen = () => {
 
   const dispatch = useDispatch()
   const isFocused = useIsFocused()
+
+  const getHistoryData = async () => {
+    const moodData = await AsyncStorage.getItem("mData")
+    if (moodData) {
+      const parsedValue = JSON.parse(moodData)
+      const moodArray = []
+      for (let i = 0; i < parsedValue.mood.length; i++) {
+        moodArray.push({
+          mood: parsedValue.mood[i],
+          date: minutesHoursAndDays(parsedValue.date[i]),
+        })
+      }
+      dispatch(data(moodArray.reverse()))
+    }
+  }
+  getHistoryData()
 
   useEffect(() => {
     if (!isFocused) {
@@ -66,6 +84,7 @@ const HomeScreen = () => {
 
       await AsyncStorage.setItem("mData", JSON.stringify(data))
       setLastEntryDate(new Date(data.date.at(-1)))
+      getHistoryData()
     } catch (error) {
       console.error(error)
     }

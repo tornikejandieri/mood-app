@@ -28,9 +28,7 @@ const StatisticsScreen = () => {
   const modal = useSelector((state: RootState) => state.modal.value)
   const dispatch = useDispatch()
 
-  const [data, setData] = useState([])
-
-  const isFocused = useIsFocused()
+  const data = useSelector((state: RootState) => state.history.value)
 
   const layout = useWindowDimensions()
 
@@ -39,24 +37,6 @@ const StatisticsScreen = () => {
     { key: "first", title: "First" },
     { key: "second", title: "Second" },
   ])
-
-  useEffect(() => {
-    const getData = async () => {
-      const moodData = await AsyncStorage.getItem("mData")
-      if (moodData) {
-        const parsedValue = JSON.parse(moodData)
-        const moodArray = []
-        for (let i = 0; i < parsedValue.mood.length; i++) {
-          moodArray.push({
-            mood: parsedValue.mood[i],
-            date: minutesHoursAndDays(parsedValue.date[i]),
-          })
-        }
-        setData(moodArray.reverse())
-      }
-    }
-    getData()
-  }, [isFocused])
 
   const renderItem = ({ item }: { item: { mood: string; date: string } }) => {
     return (
